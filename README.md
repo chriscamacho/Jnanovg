@@ -10,8 +10,8 @@ HOWEVER with very *minor* changes to the Makefile you can link to OpenGL
 and use the nanovg with some other wrapper, for example Lwjgl
 
 You will also need to change
-#include <GLES2/gl2.h>
-#define NANOVG_GLES2_IMPLEMENTATION
+\#include <GLES2/gl2.h>
+\#define NANOVG_GLES2_IMPLEMENTATION
 inside nvg.c
 
 Jnanovg had NO dependencies on Jgles2 which is only used in the "test"
