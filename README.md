@@ -20,7 +20,7 @@ inside nvg.c
 Jnanovg has NO dependencies on Jgles2 which is only used in the "test"
 class...
 
-to compile the wrapper use the jni ant target
+to compile the wrapper use the jni ant target (ant jni)
 
 to compile the test you will need Jgles2.jar and libJgles2.so in this
 directory.
@@ -41,12 +41,12 @@ NVGcolor parameter
 
 The nvg.Paint object is used to hold a copy of a NVGpaint structure
 
-What differes from nanoVG is the way the paint object is used
-any function that returns a NVGpaint is a method of the nvg.Paint object
-when called they update the instances internal NVGpaint structure
-(its stored in a java native buffer so there is no C allocation and
-the nvg.Paint object can be safely deleted by the GC without need of a
-delete or close method)
+What differes from nanoVG is the way the paint object is used,
+any function that returns a NVGpaint structure is a method of the 
+nvg.Paint object, when called they update the instances internal 
+NVGpaint structure (its stored in a java native buffer so there is no
+C allocation and the nvg.Paint object can be safely deleted by the GC
+without need of a delete or close method)
 
 Between the C demo the (ahem) "test" class and nvg.java you should be
 able to work out how to use nanovg...
