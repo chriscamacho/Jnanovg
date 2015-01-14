@@ -17,7 +17,7 @@ You will also need to change
 
 inside nvg.c
 
-Jnanovg had NO dependencies on Jgles2 which is only used in the "test"
+Jnanovg has NO dependencies on Jgles2 which is only used in the "test"
 class...
 
 to compile the wrapper use the jni ant target
