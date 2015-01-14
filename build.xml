@@ -1,0 +1,69 @@
+<project name="lwjgl" default="run" basedir=".">
+    <description>
+        ant build/run file
+    </description>
+
+    <target name="jni">
+        <exec executable="make" failonerror="true">
+            <arg line="-f jni/Makefile"/>
+        </exec>
+    </target>
+    
+    <path id="classpath">
+        <pathelement location="jni" />
+        <pathelement location="bin" />
+        <pathelement location="." /> <!-- for resources -->
+        <pathelement location="Jgles2.jar" />
+    </path>
+    
+    <target
+        name="clean"
+        description="removes all classes" >
+        <delete>
+            <fileset dir="jni" includes="**/*.class"/>
+            <fileset dir="bin" includes="**/*.class"/>
+        </delete>
+		<exec executable="make" failonerror="true">
+            <arg line="-f jni/Makefile clean"/>
+        </exec>
+    </target>
+
+    <target 
+        name="compile"
+        depends="jni"
+        description="compile the source " >
+		<mkdir dir="bin"/>
+		<fileset dir="src" includes="**/*.class"/>
+
+        <javac 
+            destdir="bin"
+            includeantruntime="false"
+			debug="on"
+			debuglevel="lines,vars,source"
+        >
+			<src path="src" />
+			
+			<compilerarg value="-Xlint:all" />
+			<compilerarg value="-Werror" />
+            <!-- maxerrs param must be seperate or space is picked up as a param -->
+            <compilerarg value="-Xmaxerrs" />
+            <compilerarg value="1" />
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+    
+    <target
+        name="run"
+        depends="compile"
+        description="runs the project compiling if needed" >
+        <java
+            fork="true"
+            classname="test"
+        >
+            <classpath refid="classpath"/>
+
+            <sysproperty key="java.library.path" value=".:./jni/"/>
+        </java>
+    </target>
+
+</project>
