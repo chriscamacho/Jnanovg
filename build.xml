@@ -23,6 +23,7 @@
             <fileset dir="jni" includes="**/*.class"/>
             <fileset dir="bin" includes="**/*.class"/>
         </delete>
+         <delete dir="release"/>
 		<exec executable="make" failonerror="true">
             <arg line="-f jni/Makefile clean"/>
         </exec>
@@ -52,6 +53,18 @@
         </javac>
     </target>
     
+    <target
+		name="release"
+		depends="jni"
+		description="compiles jar a lib placing them in the release folder"
+	>
+		<jar destfile="release/Jnanovg.jar"
+			basedir="jni/"
+			includes="**/*.class"
+		/>
+		<copy file="jni/libJnanovg.so" todir="release" />
+	</target>
+	
     <target
         name="run"
         depends="compile"
