@@ -45,10 +45,9 @@ void print_trace (void)
 void* getBuffPtr(JNIEnv *e, jobject jo)
 {
 	jobject cls = (*e)->GetObjectClass(e, jo);
-	jfieldID fid = (*e)->GetFieldID(e, cls,"buff","Ljava/nio/FloatBuffer;"); // this is an internal field so should get changed!
+	jfieldID fid = (*e)->GetFieldID(e, cls,"buff","Ljava/nio/FloatBuffer;");
 	jobject jbuff = (*e)->GetObjectField(e, jo, fid);
-	void* ptr = (void*)(*e)->GetDirectBufferAddress(e, jbuff);
-	return ptr;	
+	return (*e)->GetDirectBufferAddress(e, jbuff);
 }
 
 // given a jni env and NVGpaint this creates a java object
@@ -56,7 +55,7 @@ void* getBuffPtr(JNIEnv *e, jobject jo)
 
 /* depricated
 jobject createPaintJobject(JNIEnv *e, NVGpaint p) {
-	jclass cls = (*e)->FindClass(e, "nvg$Paintr");
+	jclass cls = (*e)->FindClass(e, "nvg$Paint");
 	assert(cls != NULL);
 
 	jmethodID constructor = (*e)->GetMethodID(e, cls, "<init>", "()V");
@@ -269,7 +268,7 @@ JNIEXPORT void JNICALL Java_nvg__1_1imagePattern
 {
 	// paint can't be null as it's passed internally as the objects instance as a convenience 
 	NVGpaint p = nvgImagePattern((NVGcontext*)ctx, ox, oy, ex, ey, angle, image, alpha);
-	NVGpaint* dp = (NVGpaint*)getBuffPtr(e,paint);
+	NVGpaint* dp = getBuffPtr(e,paint);
 	*dp = p;
 }  
 

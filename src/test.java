@@ -1,5 +1,4 @@
 import Jgles2.util;
-import Jgles2.EGL;
 import static Jgles2.GLES2.*;
 
 import java.io.IOException;
@@ -19,13 +18,13 @@ public class test {
 		t.run();
 	}
 	
-	private long egl_display,egl_surface,native_display,native_win;
+
 	
 	public void run() {
 		
 		float a=0;
 		
-		createEglContext(640,480);
+		util.createWindow(640, 480, "", false);
 		glViewport(0, 0, 640, 480);
 		
 		long vg = nvg.create(nvg.NVG_ANTIALIAS | nvg.NVG_STENCIL_STROKES | nvg.NVG_DEBUG);
@@ -52,9 +51,9 @@ public class test {
 		
 		nvg.Paint gradient = new nvg.Paint();
 		
-		while(!util.keyDown(util.KEY_ESC)) {
+		while (!util.shouldClose() && !util.keyDown(util.KEY_ESCAPE)) {
 
-			util.pumpEvents(native_display,native_win);
+			util.pollEvents();
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			nvg.beginFrame(vg,640,480,1.333f);
@@ -201,88 +200,16 @@ public class test {
 
 			
 			nvg.endFrame(vg);
-			EGL.eglSwapBuffers(egl_display, egl_surface); 
+			util.swapBuffer();
 			
 			a=a+0.01f;
 		
 		}
 		
-		//nvg.deletePaint(parrotPaint);
+
 
 		nvg.deleteImage(vg,parrot);
-		util.closeWindow(native_display,native_win);
-		
-	}
-
-
-	// just moved here to get it out of the way! 
-	private void createEglContext(int wx, int wy) {
-		
-		int attribs[] = {
-            EGL.EGL_RED_SIZE, 1, 
-            EGL.EGL_GREEN_SIZE, 1,
-            EGL.EGL_BLUE_SIZE, 1,
-            EGL.EGL_ALPHA_SIZE, 1,
-            EGL.EGL_DEPTH_SIZE, 1,
-            EGL.EGL_RENDERABLE_TYPE, EGL.EGL_OPENGL_ES2_BIT,
-            EGL.EGL_NONE // end of list
-        };
-        
-        int ctx_attribs[] = {
-            EGL.EGL_CONTEXT_CLIENT_VERSION, 2,
-            EGL.EGL_NONE // end of list
-        };
-        // buffers for EGL attributs 
-        IntBuffer attribsBuffer = util.createIntBuffer(attribs.length);
-        attribsBuffer.put(attribs);
-        
-        IntBuffer ctx_attribsBuffer = util.createIntBuffer(ctx_attribs.length);
-        ctx_attribsBuffer.put(ctx_attribs);
-        
-        native_display = util.get_native_display();
-        egl_display = EGL.eglGetDisplay( native_display );
-        
-        if (!EGL.eglInitialize(egl_display)) {
-            System.out.println("EGL failed to initialise");
-            System.exit(-1);
-        }
-
-        // val is a integer intBuffer which is reused for various int return values
-        IntBuffer val = util.createIntBuffer(2);
-        
-        int config_size=1;
-        LongBuffer configsBuffer = util.createLongBuffer(config_size);
-        
-        if (!EGL.eglChooseConfig(egl_display, attribsBuffer,
-                                    configsBuffer, config_size, val)) {
-            System.out.println("failed to get an EGL config");
-            System.exit(-1);            
-        }
-
-        long config=configsBuffer.get(0); 
-        // last 5 parameters of make_native_window are
-        // coordinates of top left corner of window, window width and height
-        // and finally a flag for fullscreen
-        native_win = util.make_native_window(native_display, egl_display, config,
-                    0, 0, wx, wy, false);
-                    
-        long egl_context = EGL.eglCreateContext(egl_display, config, EGL.EGL_NO_CONTEXT, ctx_attribsBuffer );
-        if (egl_context==0) {
-            System.out.println("failed to get an EGL context");
-            System.exit(-1);
-        }
-        
-        egl_surface = EGL.eglCreateWindowSurface(egl_display, config, native_win, null);
-        if (egl_surface == 0) {
-            System.out.println("failed to create a windowed surface");
-            System.exit(-1);
-        }      
-        
-        if (!EGL.eglMakeCurrent(egl_display, egl_surface, egl_surface, egl_context)) {
-            System.out.println("eglMakeCurrent failed");
-            System.out.println("error code " + Integer.toHexString(EGL.eglGetError()));
-            System.exit(-1);
-        }	
+		util.terminate();
 		
 	}
 
