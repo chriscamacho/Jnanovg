@@ -10,6 +10,10 @@ import java.nio.IntBuffer;
 
 import java.io.FileInputStream;
 
+
+import nvg.*;
+
+
 public class test {
 	public static void main(String[] args) {
 		nvg.test(123);
@@ -34,7 +38,7 @@ public class test {
 		glEnable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		
-		nvg.Color red = new nvg.Color(1,0,0,1);
+		nvg.Color red = new nvg.Color(1f,0f,0f,1f);
 		nvg.Color green = new nvg.Color(0,1,0,1);
 		nvg.Color blue = new nvg.Color(0,0,1,1);
 		

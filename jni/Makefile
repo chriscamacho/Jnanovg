@@ -18,15 +18,14 @@ jni/nvg.o: jni/nvg.c
 jni/nanovg.o:
 	$(CC) $(CFLAGS) -c nanovg/src/nanovg.c -o jni/nanovg.o
 
-jni/nvg.h: jni/nvg.java
-	javac -sourcepath jni -d jni jni/nvg.java
-	javah -sourcepath jni -d jni nvg
+jni/nvg.h: jni/nvg/nvg.java
+	javac -d jni jni/nvg/nvg.java
+	javah -sourcepath jni -d jni nvg.nvg
 	
 clean:
 	rm -rf jni/nvg.class
 	rm -rf jni/libJnanovg.so
 	rm -rf jni/nanovg.o
 	rm -rf jni/nvg.o
-	rm -rf jni/nvg.h
-	rm -rf jni/nvg_Color.h
-	rm -rf jni/nvg_Paint.h
+	rm -rf jni/*.h
+
