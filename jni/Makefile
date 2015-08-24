@@ -2,7 +2,7 @@ CC=gcc
 
 #JAVA_HOME=`readlink -f /usr/bin/javac | sed "s:bin/javac::"`
 # gentoo is a little less KISS !
-JAVA_HOME=/usr/lib/jvm/icedtea-7
+#JAVA_HOME=/usr/lib/jvm/icedtea-7
 
 LIBS=$(shell pkg-config glesv2 --libs) 
 
