@@ -59,14 +59,6 @@ enum NVGcreateFlags {
 NVGcontext* nvgCreateGL2(int flags);
 void nvgDeleteGL2(NVGcontext* ctx);
 
-/*
-#include <GLES2/gl2ext.h>
-#define GL_UNPACK_ROW_LENGTH	GL_UNPACK_ROW_LENGTH_EXT
-#define GL_UNPACK_SKIP_PIXELS	GL_UNPACK_SKIP_PIXELS_EXT
-#define GL_UNPACK_SKIP_ROWS		GL_UNPACK_SKIP_ROWS_EXT
-#define GL_RED					GL_RED_EXT
-*/
-
 #endif
 
 #if defined NANOVG_GL3
@@ -371,8 +363,8 @@ static int glnvg__deleteTexture(GLNVGcontext* gl, int id)
 
 static void glnvg__dumpShaderError(GLuint shader, const char* name, const char* type)
 {
-	char str[512+1];
-	int len = 0;
+	GLchar str[512+1];
+	GLsizei len = 0;
 	glGetShaderInfoLog(shader, 512, &len, str);
 	if (len > 512) len = 512;
 	str[len] = '\0';
@@ -381,8 +373,8 @@ static void glnvg__dumpShaderError(GLuint shader, const char* name, const char* 
 
 static void glnvg__dumpProgramError(GLuint prog, const char* name)
 {
-	char str[512+1];
-	int len = 0;
+	GLchar str[512+1];
+	GLsizei len = 0;
 	glGetProgramInfoLog(prog, 512, &len, str);
 	if (len > 512) len = 512;
 	str[len] = '\0';
