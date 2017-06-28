@@ -76,6 +76,12 @@ public class nvg {
 			buff.put(2, b);
 			buff.put(3, a);
 		}
+
+		public float r() { return buff.get(0); }
+		public float g() { return buff.get(1); }
+		public float b() { return buff.get(2); }
+		public float a() { return buff.get(3); }
+		
 	}
 
 	// a lot of these are straight ports as JNI is probably slower for
