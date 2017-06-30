@@ -75,21 +75,6 @@ jobject createPaintJobject(JNIEnv *e, NVGpaint p) {
 }
 */
 
-JNIEXPORT jlong JNICALL Java_nvg_nvg_test
-  (JNIEnv *e, jclass c, jint i)
-{
-	printf("i=%i\n",i);
-	//printf("sizeof NVGpaint=%i\n",sizeof(NVGpaint));
-	//printf("sizeof NVGpaint=%i\n",sizeof(NVGcolor));
-	
-	// this is only here in case of a change with nanovg struct sizes
-	// failure of these asserts will need nvg subclass buffer changes
-	assert(sizeof(NVGpaint)==76);
-	assert(sizeof(NVGcolor)==16);
-	
-	return glGetError();
-}
-
 
 JNIEXPORT jlong JNICALL Java_nvg_nvg_create
   (JNIEnv *e, jclass c, jint flags)

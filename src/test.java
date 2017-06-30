@@ -16,7 +16,6 @@ import nvg.*;
 
 public class test {
 	public static void main(String[] args) {
-		nvg.test(123);
 		
 		test t=new test();
 		t.run();

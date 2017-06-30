@@ -169,8 +169,7 @@ public class nvg {
 	private static native void __radialGradient(long ctx, Paint pnt, float cx, float cy, float inr, float outr,
 												Color icol, Color ocol);
   
-    static public native long test(int a);
-	
+    
 	nvg() {
 		System.out.println("nvg - this is designed to be a static singleton object, you should not instance it!");
 	}
